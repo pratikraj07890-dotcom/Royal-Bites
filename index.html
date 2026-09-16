@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Royal Bite — A feast fit for royalty</title>
+  <meta name="description" content="Royal Bite — a modern Indian dining experience in Sahibganj.">
+  <style>
+    :root {
+      --ink: #0a0908;
+      --panel: #141210;
+      --panel2: #1c1917;
+      --gold: #d4af37;
+      --light: #fbf9f5;
+      --muted: #8a817c;
+      --crimson: #8b0000
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--ink);
+      color: var(--light);
+      font-family: Arial, sans-serif;
+      margin: 0
+    }
+
+    button {
+      font: inherit
+    }
+
+    .ribbon {
+      border-bottom: 1px solid #3a2f17;
+      color: var(--muted);
+      display: flex;
+      font: 10px monospace;
+      justify-content: space-between;
+      letter-spacing: .16em;
+      padding: 11px 5%;
+      text-transform: uppercase
+    }
+
+    .ribbon b {
+      color: var(--gold);
+      font-weight: 400
+    }
+
+    .nav {
+      align-items: center;
+      background: #0a0908ed;
+      border-bottom: 1px solid #3a2f17;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 5%;
+      position: sticky;
+      top: 0;
+      z-index: 2
+    }
+
+    .logo {
+      align-items: center;
+      display: flex;
+      gap: 11px
+    }
+
+    .seal {
+      align-items: center;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold);
+      display: inline-flex;
+      font: 14px Georgia;
+      height: 36px;
+      justify-content: center;
+      width: 36px
+    }
+
+    .logo strong {
+      display: block;
+      letter-spacing: .2em
+    }
+
+    .logo small {
+      color: var(--muted);
+      display: block;
+      font: 9px monospace;
+      letter-spacing: .1em;
+      margin-top: 4px
+    }
+
+    .navlinks {
+      align-items: center;
+      display: flex;
+      gap: 22px
+    }
+
+    .navlinks a,
+    .navlinks button {
+      background: none;
+      border: 0;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 11px;
+      text-decoration: none;
+      white-space: nowrap
+    }
+
+    .navlinks a:hover,
+    .navlinks button:hover {
+      color: var(--gold)
+    }
+
+    .cta {
+      background: var(--gold) !important;
+      color: var(--ink) !important;
+      padding: 12px 17px
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 650px;
+      padding: 90px 9%;
+      position: relative
+    }
+
+    .eyebrow,
+    .kicker {
+      color: var(--gold);
+      font: 10px monospace;
+      letter-spacing: .25em;
+      text-transform: uppercase
+    }
+
+    .hero h1,
+    h2 {
+      font: 400 clamp(54px, 8vw, 118px)/.84 Georgia, serif;
+      letter-spacing: -.06em;
+      margin: 35px 0
+    }
+
+    .hero h1 em,
+    h2 em {
+      color: var(--gold);
+      font-style: italic
+    }
+
+    .hero p {
+      color: #aaa19b;
+      line-height: 1.8;
+      max-width: 420px
+    }
+
+    .actions {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 32px
+    }
+
+    .gold {
+      background: var(--gold);
+      border: 1px solid var(--gold);
+      color: var(--ink);
+      cursor: pointer;
+      padding: 15px 20px
+    }
+
+    .link {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--gold);
+      color: var(--gold);
+      cursor: pointer;
+      padding: 0 0 7px
+    }
+
+    .frame {
+      align-items: center;
+      background: radial-gradient(circle, #4a3c16, #17120d 45%, #0a0908);
+      border: 1px solid #a88627;
+      display: flex;
+      justify-content: center;
+      min-height: 470px;
+      overflow: hidden;
+      position: relative;
+      transform: rotate(3deg)
+    }
+
+    .frame:after {
+      border: 1px solid #725c1f;
+      content: '';
+      inset: 16px;
+      position: absolute;
+      z-index: 2
+    }
+
+    .mark {
+      color: #8f7628;
+      font: 90px Georgia;
+      position: relative;
+      z-index: 1
+    }
+
+    .frame span {
+      bottom: 28px;
+      color: var(--gold);
+      font: 10px monospace;
+      left: 31px;
+      letter-spacing: .13em;
+      position: absolute;
+      z-index: 2
+    }
+
+    .frame small {
+      bottom: 12px;
+      color: var(--muted);
+      font: 10px Arial;
+      left: 31px;
+      position: absolute;
+      z-index: 2
+    }
+
+    /* ═══ NEW: real photo layer inside every .frame — sits under the placeholder mark/label so it shows the moment a real file exists ═══ */
+    .frame img.photo {
+      height: 100%;
+      left: 0;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 0
+    }
+
+    .frame.has-photo .mark,
+    .frame.has-photo>span,
+    .frame.has-photo>small {
+      display: none
+    }
+
+    .frame.has-photo:after {
+      border-color: rgba(212, 175, 55, .55)
+    }
+
+    .band {
+      background: var(--gold);
+      color: var(--ink);
+      font: bold 11px monospace;
+      letter-spacing: .18em;
+      overflow: hidden;
+      padding: 15px;
+      text-align: center
+    }
+
+    .section {
+      padding: 115px 9%
+    }
+
+    .dark {
+      background: #12100e
+    }
+
+    .two {
+      display: grid;
+      gap: 10%;
+      grid-template-columns: 1fr 1fr
+    }
+
+    .lead {
+      font: 23px/1.5 Georgia;
+      max-width: 430px
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.8
+    }
+
+    .stats {
+      border-top: 1px solid #3a2f17;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 60px;
+      padding-top: 25px
+    }
+
+    .stats strong {
+      color: var(--gold);
+      display: block;
+      font: 42px Georgia
+    }
+
+    .stats span {
+      color: var(--muted);
+      font: 10px monospace
+    }
+
+    .headrow {
+      align-items: end;
+      display: flex;
+      justify-content: space-between
+    }
+
+    .headrow p {
+      color: var(--muted);
+      font: 12px monospace;
+      text-align: right
+    }
+
+    .filters {
+      border-bottom: 1px solid #3a2f17;
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      margin-top: 55px;
+      padding-bottom: 16px
+    }
+
+    .filters button {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: 10px monospace;
+      text-transform: uppercase
+    }
+
+    .filters button.active,
+    .filters button:hover {
+      border-color: var(--gold);
+      color: var(--gold)
+    }
+
+    .search {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid #725c1f;
+      color: var(--light);
+      padding: 7px
+    }
+
+    .dishes {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 35px
+    }
+
+    .dish {
+      background: var(--panel);
+      border: 1px solid #332a18
+    }
+
+    .dish:hover {
+      border-color: var(--gold)
+    }
+
+    .dishimg {
+      align-items: center;
+      background: radial-gradient(circle, #6e551d, #19130c 55%);
+      display: flex;
+      height: 210px;
+      justify-content: center;
+      overflow: hidden;
+      position: relative
+    }
+
+    .dishimg:after {
+      border: 1px solid #977627;
+      border-radius: 50%;
+      content: '';
+      height: 130px;
+      position: absolute;
+      width: 130px;
+      z-index: 2
+    }
+
+    .dishimg b {
+      color: #a68a34;
+      font: 50px Georgia;
+      position: relative;
+      z-index: 1
+    }
+
+    .dishimg img.photo {
+      height: 100%;
+      left: 0;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 0
+    }
+
+    .dishimg.has-photo b {
+      display: none
+    }
+
+    .dishimg.has-photo:after {
+      border-color: rgba(212, 175, 55, .55)
+    }
+
+    .dishbody {
+      padding: 18px
+    }
+
+    .dishbody h3 {
+      font: 24px Georgia;
+      margin: 0
+    }
+
+    .dishbody p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      min-height: 55px
+    }
+
+    .price {
+      align-items: center;
+      border-top: 1px solid #3a2f17;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 13px
+    }
+
+    .price strong {
+      color: var(--gold);
+      font: 18px Georgia
+    }
+
+    .price button {
+      background: none;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold);
+      cursor: pointer;
+      height: 28px;
+      width: 28px
+    }
+
+    .gallery {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1.1fr .9fr;
+      grid-template-rows: 280px 220px
+    }
+
+    .gallery .frame:first-child {
+      grid-row: 1/3
+    }
+
+    .gallery .frame {
+      min-height: 0;
+      transform: none
+    }
+
+    .reviews {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: 55px
+    }
+
+    .review {
+      border: 1px solid #49391a;
+      padding: 30px
+    }
+
+    .review.feature {
+      background: var(--panel2)
+    }
+
+    .review q {
+      display: block;
+      font: 22px/1.4 Georgia;
+      margin: 30px 0
+    }
+
+    .review small {
+      color: var(--muted);
+      font: 10px monospace
+    }
+
+    .reserve {
+      background: linear-gradient(110deg, #1c1917, #32130f);
+      border: 1px solid #a88627;
+      padding: 65px 7%
+    }
+
+    .reserve .gold {
+      float: right;
+      margin-top: -85px
+    }
+
+    .contact strong {
+      color: var(--gold);
+      display: block;
+      font: 22px Georgia;
+      margin-top: 10px
+    }
+
+    .footer {
+      border-top: 1px solid #3a2f17;
+      padding: 70px 9% 25px
+    }
+
+    .footerbottom {
+      border-top: 1px solid #3a2f17;
+      color: var(--muted);
+      display: flex;
+      font: 10px monospace;
+      justify-content: space-between;
+      margin-top: 55px;
+      padding-top: 18px
+    }
+
+    .modal {
+      background: #1c1917;
+      border: 1px solid var(--gold);
+      box-shadow: 0 20px 70px #000;
+      left: 50%;
+      max-width: 500px;
+      padding: 40px;
+      position: fixed;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% - 30px);
+      z-index: 5
+    }
+
+    .overlay {
+      background: #000b;
+      inset: 0;
+      position: fixed;
+      z-index: 4
+    }
+
+    .modal h2 {
+      font-size: 55px;
+      margin: 20px 0
+    }
+
+    .modal label {
+      color: #d6cfc7;
+      display: block;
+      font: 10px monospace;
+      margin: 14px 0
+    }
+
+    .modal input,
+    .modal select {
+      background: #0f0e0d;
+      border: 1px solid #55421a;
+      color: #fff;
+      padding: 12px;
+      width: 100%
+    }
+
+    .modal .close {
+      background: none;
+      border: 0;
+      color: var(--gold);
+      cursor: pointer;
+      float: right;
+      font-size: 22px
+    }
+
+    .hidden {
+      display: none
+    }
+
+    /* ═══ Founders / Team — reuses .frame look in a 2-up grid ═══ */
+    .duo {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 20px
+    }
+
+    .duo .frame {
+      min-height: 340px;
+      transform: none
+    }
+
+    .person {
+      margin-top: 16px
+    }
+
+    .person strong {
+      color: var(--gold);
+      display: block;
+      font: 22px Georgia
+    }
+
+    .person span {
+      color: var(--muted);
+      display: block;
+      font: 9px monospace;
+      letter-spacing: .14em;
+      margin-top: 4px;
+      text-transform: uppercase
+    }
+
+    /* ═══ checklist — used for Private Dining & features ═══ */
+    .checklist {
+      list-style: none;
+      margin: 26px 0;
+      padding: 0
+    }
+
+    .checklist li {
+      border-top: 1px solid #3a2f17;
+      color: #d6cfc7;
+      font-size: 13px;
+      letter-spacing: .02em;
+      padding: 14px 0
+    }
+
+    .checklist li:last-child {
+      border-bottom: 1px solid #3a2f17
+    }
+
+    .checklist li b {
+      color: var(--gold);
+      font-weight: 400;
+      margin-right: 8px
+    }
+
+    /* ═══ FAQ accordion — matches the gold circular "+" button already used for dishes ═══ */
+    .faq {
+      margin-top: 45px
+    }
+
+    .faq-item {
+      border-top: 1px solid #3a2f17
+    }
+
+    .faq-item:last-child {
+      border-bottom: 1px solid #3a2f17
+    }
+
+    .faq-q {
+      align-items: center;
+      background: none;
+      border: 0;
+      color: var(--light);
+      cursor: pointer;
+      display: flex;
+      font: 20px Georgia;
+      gap: 20px;
+      justify-content: space-between;
+      padding: 24px 0;
+      text-align: left;
+      width: 100%
+    }
+
+    .faq-q .plus {
+      align-items: center;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold);
+      display: flex;
+      flex: none;
+      font: 16px Georgia;
+      height: 30px;
+      justify-content: center;
+      transition: transform .3s;
+      width: 30px
+    }
+
+    .faq-item.open .faq-q .plus {
+      transform: rotate(45deg)
+    }
+
+    .faq-a {
+      color: var(--muted);
+      line-height: 1.8;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease
+    }
+
+    .faq-a p {
+      font-size: 13px;
+      margin: 0;
+      max-width: 600px;
+      padding: 0 0 26px
+    }
+
+    /* ═══ live map, tinted to match the dark-gold palette ═══ */
+    .mapframe {
+      border: 1px solid #a88627;
+      filter: grayscale(.35) sepia(.2) brightness(.72) contrast(1.1);
+      height: 340px;
+      margin-top: 34px;
+      overflow: hidden;
+      position: relative
+    }
+
+    .mapframe iframe {
+      border: 0;
+      height: 100%;
+      width: 100%
+    }
+
+    /* ═══ minimal WhatsApp concierge — same monochrome seal style as the "RB" mark ═══ */
+    .wa-fab {
+      align-items: center;
+      background: var(--ink);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      bottom: 28px;
+      box-shadow: 0 12px 30px #000a;
+      color: var(--gold);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      font: 9px monospace;
+      gap: 2px;
+      height: 58px;
+      justify-content: center;
+      letter-spacing: .06em;
+      position: fixed;
+      right: 28px;
+      text-decoration: none;
+      transition: .25s;
+      z-index: 3
+    }
+
+    .wa-fab:hover {
+      background: var(--gold);
+      color: var(--ink)
+    }
+
+    .wa-fab b {
+      font: 16px Georgia
+    }
+
+    @media(max-width:800px) {
+
+      .ribbon span:first-child,
+      .ribbon span:last-child,
+      .navlinks a {
+        display: none
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 7%
+      }
+
+      .frame {
+        margin-top: 30px;
+        min-height: 360px
+      }
+
+      .section {
+        padding: 80px 7%
+      }
+
+      .two {
+        grid-template-columns: 1fr
+      }
+
+      .stats,
+      .dishes,
+      .reviews {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .headrow {
+        align-items: start;
+        flex-direction: column;
+        gap: 20px
+      }
+
+      .headrow p {
+        text-align: left
+      }
+
+      .gallery {
+        display: flex;
+        flex-direction: column
+      }
+
+      .gallery .frame {
+        height: 280px
+      }
+
+      .reserve .gold {
+        float: none;
+        margin: 25px 0 0
+      }
+
+      .footerbottom {
+        flex-direction: column;
+        gap: 10px
+      }
+
+      .duo {
+        grid-template-columns: 1fr
+      }
+
+      .wa-fab {
+        bottom: 20px;
+        height: 50px;
+        right: 20px;
+        width: 50px
+      }
+    }
+
+    @media(max-width:520px) {
+
+      .stats,
+      .dishes,
+      .reviews {
+        grid-template-columns: 1fr
+      }
+
+      .nav {
+        padding: 16px 6%
+      }
+
+      .hero h1 {
+        font-size: 68px
+      }
+
+      .filters {
+        align-items: start;
+        flex-direction: column
+      }
+
+      .filters div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px
+      }
+
+      .modal {
+        padding: 28px 22px
+      }
+
+      .faq-q {
+        font-size: 17px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ribbon"><span>ROYAL BITE · SAHIBGANJ</span><b>A PRIVATE TABLE FOR EVERY OCCASION</b><span>OPEN DAILY · 12
+      — 23</span></div>
+  <nav class="nav"><button class="logo" onclick="go('home')"><span class="seal">RB</span><span><strong>ROYAL
+          BITE</strong><small>HOUSE OF INDIAN DINING</small></span></button>
+    <div class="navlinks"><a href="#menu">The Menu</a><a href="#founders">Founders</a><a
+        href="#celebrations">Celebrations</a><a href="#reviews">Guest Notes</a><a href="#faq">FAQ</a><button class="cta"
+        onclick="openModal()">Reserve a table ↗</button></div>
+  </nav>
+  <main>
+    <section class="hero" id="home">
+      <div>
+        <div class="eyebrow">Est. 2024 · Sahibganj</div>
+        <h1>A feast<br><em>fit for</em><br>royalty.</h1>
+        <p>Where ancient Indian recipes meet a modern table. Every plate is an invitation to slow down, gather close and
+          taste the extraordinary.</p>
+        <div class="actions"><button class="gold" onclick="go('menu')">Explore the menu ↓</button><button class="link"
+            onclick="openModal()">Reserve a table ↗</button><button class="link"
+            onclick="waMessage('Hi Royal Bite, I have a question.')">WhatsApp concierge ↗</button></div>
+      </div>
+      <!-- 📷 PHOTO: images/hero-dining.jpg — cinematic 16:10 hero photo, candlelit dining table, brass serveware, warm amber light -->
+      <div class="frame"><img class="photo" src="images/show.png" alt="Royal Bite dining room"><b
+          class="mark">RB</b><span>PHOTO SLOT · HERO ATMOSPHERE</span><small>16:10 · candlelit dining room · warm
+          editorial light</small></div>
+    </section>
+    <div class="band">ROYAL RECIPES　✦　MODERN INDIAN SOUL　✦　THE TABLE IS YOURS　✦　ROYAL RECIPES</div>
+    <section class="section dark">
+      <div class="kicker">01 · The experience</div>
+      <div class="two">
+        <h2>Not just dinner.<br><em>A little ceremony.</em></h2>
+        <div>
+          <p class="lead">Royal Bite is a celebration of the Indian table — generous, aromatic and full of little
+            surprises.</p>
+          <p class="muted">From the first pour of saffron welcome drink to the last spoon of slow-cooked kheer, every
+            detail has been considered to make an ordinary evening feel like an occasion.</p>
+        </div>
+      </div>
+      <div class="stats">
+        <div><strong>40+</strong><span>ROYAL RECIPES</span></div>
+        <div><strong>11</strong><span>HOURS OF PREP DAILY</span></div>
+        <div><strong>4.9★</strong><span>GUEST RATING</span></div>
+        <div><strong>01</strong><span>SIGNATURE TABLE</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="menu">
+      <div class="headrow">
+        <div>
+          <div class="kicker">02 · The menu</div>
+          <h2>Made to be<br><em>remembered.</em></h2>
+        </div>
+        <p>Recipes with lineage.<br>Flavours with a point of view.</p>
+      </div>
+      <div class="filters">
+        <div><button class="active" onclick="filter('all',this)">All</button><button
+            onclick="filter('signature',this)">Signature</button><button
+            onclick="filter('tandoor',this)">Tandoor</button><button
+            onclick="filter('mains',this)">Mains</button><button onclick="filter('dessert',this)">Dessert</button></div>
+        <input class="search" oninput="search(this.value)" placeholder="Search the menu">
+      </div>
+      <div class="dishes" id="dishes">
+        <article class="dish" data-cat="signature">
+          <!-- 📷 PHOTO: images/dish-biryani.jpg — 4:3 top-down photo of Gold Leaf Dum Biryani in a brass handi, candlelight -->
+          <div class="dishimg"><img class="photo" src="images/dam biryaani.png" alt="Gold Leaf Dum Biryani"><b>RB</b>
+          </div>
+          <div class="dishbody">
+            <h3>Gold Leaf Dum Biryani</h3>
+            <p>Aged basmati, tender chicken, mace, saffron and a 24-karat finish.</p>
+            <div class="price"><strong>₹780</strong><button onclick="note('Gold Leaf Dum Biryani')">+</button></div>
+          </div>
+        </article>
+        <article class="dish" data-cat="tandoor">
+          <!-- 📷 PHOTO: images/dish-prawns.jpg — 4:3 close-up of charred tiger prawns with burnt lemon and coriander oil -->
+          <div class="dishimg"><img class="photo" src="images/Tandoori prawns.png" alt="Tandoori Prawns"><b>RB</b></div>
+          <div class="dishbody">
+            <h3>Tandoori Prawns</h3>
+            <p>Charred tiger prawns, kasundi, burnt lemon and coriander oil.</p>
+            <div class="price"><strong>₹1,050</strong><button onclick="note('Tandoori Prawns')">+</button></div>
+          </div>
+        </article>
+        <article class="dish" data-cat="mains">
+          <!-- 📷 PHOTO: images/dish-dal.jpg — 4:3 bowl of saffron smoked dal with cultured butter, moody light -->
+          <div class="dishimg"><img class="photo" src="images/Softron Smoket Dal.png" alt="Saffron Smoked Dal"><b>RB</b>
+          </div>
+          <div class="dishbody">
+            <h3>Saffron Smoked Dal</h3>
+            <p>Black lentils, oak smoke, cultured butter and a crackle of cumin.</p>
+            <div class="price"><strong>₹520</strong><button onclick="note('Saffron Smoked Dal')">+</button></div>
+          </div>
+        </article>
+        <article class="dish" data-cat="dessert">
+          <!-- 📷 PHOTO: images/dish-kheer.jpg — 4:3 editorial photo of Royal Kesar Kheer with pistachio praline and silver leaf -->
+          <div class="dishimg"><img class="photo" src="images/kesar kheer.png" alt="Royal Kesar Kheer"><b>RB</b></div>
+          <div class="dishbody">
+            <h3>Royal Kesar Kheer</h3>
+            <p>Slow-cooked rice, Kashmiri saffron, pistachio praline and silver leaf.</p>
+            <div class="price"><strong>₹360</strong><button onclick="note('Royal Kesar Kheer')">+</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section dark" id="story">
+      <div class="kicker">03 · Our story</div>
+      <div class="two">
+        <h2>From our<br><em>royal kitchen</em><br>to your table.</h2>
+        <div>
+          <p class="lead">There is a particular kind of magic in food made for sharing. Our recipes began in family
+            kitchens where masalas were measured by instinct.</p>
+          <p class="muted">Today, Royal Bite brings that same warmth to a considered, contemporary room. We honour the
+            past without living in it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ FOUNDERS (2 owner photos) ═══════════ -->
+    <section class="section" id="founders">
+      <div class="kicker">04 · The founders</div>
+      <div class="two">
+        <h2>Two people.<br><em>One obsession.</em></h2>
+        <p class="lead" style="margin-top:0">Royal Bite exists because two people refused to compromise on a single
+          ingredient — and still don't.</p>
+      </div>
+      <div class="duo">
+        <div>
+          <!-- 📷 PHOTO: images/founder-1.jpg — 4:5 portrait of Founder 1 (owner), warm editorial light, dining room or kitchen -->
+          <div class="frame"><img class="photo" src="images/Gemini_Generated_Image_qfnwd3qfnwd3qfnw.png"
+              alt="Founder portrait"><b class="mark">RB</b><span>PHOTO SLOT · FOUNDER PORTRAIT</span></div>
+          <div class="person"><strong>Founder Name</strong><span>Co-Founder &amp; Head of Kitchen</span></div>
+        </div>
+        <div>
+          <!-- 📷 PHOTO: images/founder-2.jpg — 4:5 portrait of Founder 2 (owner), same lighting, greeting guests -->
+          <div class="frame"><img class="photo" src="images/Gemini_Generated_Image_ybziwpybziwpybzi.png"
+              alt="Founder portrait"><b class="mark">RB</b><span>PHOTO SLOT · FOUNDER PORTRAIT</span></div>
+          <div class="person"><strong>Founder Name</strong><span>Co-Founder &amp; Host</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ THE KITCHEN TEAM (2 team photos) ═══════════ -->
+    <section class="section dark" id="team">
+      <div class="kicker">05 · The kitchen team</div>
+      <div class="two">
+        <h2>The hands<br><em>behind the table.</em></h2>
+        <p class="lead" style="margin-top:0">Every plate passes through a small, obsessive team — trained on family
+          recipes, sharpened by years at the flame.</p>
+      </div>
+      <div class="duo">
+        <div>
+          <!-- 📷 PHOTO: images/team-chef.jpg — 4:5 photo of the head chef at the tandoor / live fire, action shot, ember light -->
+          <div class="frame"><img class="photo" src="images/team.png" alt="Head chef at work"><b
+              class="mark">RB</b><span>PHOTO SLOT · HEAD CHEF AT WORK</span></div>
+          <div class="person"><strong>Head Chef</strong><span>Tandoor &amp; Signature Recipes</span></div>
+        </div>
+        <div>
+          <!-- 📷 PHOTO: images/team-service.jpg — 4:5 photo of the front-of-house / service team plating or serving -->
+          <div class="frame"><img class="photo" src="images/team2.png" alt="Service team"><b
+              class="mark">RB</b><span>PHOTO SLOT · SERVICE TEAM</span></div>
+          <div class="person"><strong>The Floor Team</strong><span>Service &amp; Guest Experience</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="theroom">
+      <div class="headrow">
+        <div>
+          <div class="kicker">06 · The room</div>
+          <h2>Come for the food.<br><em>Stay for the feeling.</em></h2>
+        </div>
+      </div>
+      <div class="gallery">
+        <!-- 📷 PHOTO: images/room-dining.jpg — 4:5 vertical architectural photo, velvet seating, brass lights, low candlelight -->
+        <div class="frame"><img class="photo" src="images/Gemini_Generated_Image_1vqjax1vqjax1vqj.png" alt="Royal Bite dining room"><b
+            class="mark">RB</b><span>PHOTO SLOT · THE DINING ROOM</span></div>
+        <!-- 📷 PHOTO: images/room-private-table.jpg — 4:3 photo of a private table set for six, ivory linens, seasonal flowers -->
+        <div class="frame"><img class="photo" src="images/private-table.png" alt="Private dining table"><b
+            class="mark">RB</b><span>PHOTO SLOT · PRIVATE TABLE</span></div>
+        <!-- 📷 PHOTO: images/room-live-fire.jpg — 16:9 photo of the live tandoor flame and chef station, ember tones -->
+        <div class="frame"><img class="photo" src="images/fire-room.png" alt="Live tandoor fire"><b
+            class="mark">RB</b><span>PHOTO SLOT · THE LIVE FIRE</span></div>
+      </div>
+    </section>
+
+    <!-- ═══════════ PRIVATE DINING & CELEBRATIONS ═══════════ -->
+    <section class="section dark" id="celebrations">
+      <div class="kicker">07 · Celebrations</div>
+      <div class="two">
+        <!-- 📷 PHOTO: images/celebration.jpg — photo of a table set up for a birthday/anniversary celebration -->
+        <div class="frame" style="min-height:380px"><img class="photo" src="images/celebration table.jpg"
+            alt="Celebration table setup"><b class="mark">RB</b><span>PHOTO SLOT · CELEBRATION TABLE</span></div>
+        <div>
+          <h2 style="margin-top:0">Birthdays.<br><em>Milestones. Us.</em></h2>
+          <p class="lead">A quiet anniversary dinner or a table of twenty for a milestone birthday — we set the room to
+            match the occasion.</p>
+          <ul class="checklist">
+            <li><b>—</b>Private table for up to 20 guests, advance booking</li>
+            <li><b>—</b>Custom set menus for birthdays &amp; anniversaries</li>
+            <li><b>—</b>Bulk / corporate event catering on request</li>
+            <li><b>—</b>Personal concierge for every celebration</li>
+          </ul><button class="link"
+            onclick="waMessage('Hi Royal Bite, I want to plan a celebration / private dining booking.')">Plan a
+            celebration ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="reviews">
+      <div class="kicker">08 · Guest notes</div>
+      <h2>Words from<br><em>the table.</em></h2>
+      <div class="reviews">
+        <article class="review"><b>“</b><q>A room that feels like a secret, and food that tastes like a story worth
+            keeping.</q><small>MEERA KAPOOR · FOOD &amp; CULTURE EDITOR</small></article>
+        <article class="review feature"><b>“</b><q>The gold leaf biryani is theatre, but the real luxury is in every
+            quiet, precise flavour.</q><small>ARJUN MALHOTRA · VERIFIED GUEST</small></article>
+        <article class="review"><b>“</b><q>We came for dinner and left with a new family ritual. Royal Bite is genuinely
+            unforgettable.</q><small>NAINA &amp; KABIR · CELEBRATION GUESTS</small></article>
+      </div>
+    </section>
+
+    <!-- ═══════════ FAQ ═══════════ -->
+    <section class="section" id="faq">
+      <div class="kicker">09 · Good to know</div>
+      <h2>A few<br><em>quiet answers.</em></h2>
+      <div class="faq" id="faqList">
+        <div class="faq-item open"><button class="faq-q" onclick="toggleFaq(this)">How do I reserve a table?<span
+              class="plus">+</span></button>
+          <div class="faq-a" style="max-height:200px">
+            <p>Tap "Reserve a table" and fill in your name, phone, date and party size — our concierge confirms
+              personally within 30 minutes. You can also message us directly on WhatsApp for a faster reply.</p>
+          </div>
+        </div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do you take walk-ins?<span
+              class="plus">+</span></button>
+          <div class="faq-a">
+            <p>We welcome walk-ins whenever a table is free, but reservations are recommended on weekends and for
+              parties of four or more.</p>
+          </div>
+        </div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can you host private celebrations?<span
+              class="plus">+</span></button>
+          <div class="faq-a">
+            <p>Yes — see the Celebrations section above. We host birthdays, anniversaries and small corporate gatherings
+              for up to 20 guests, with a custom menu on request.</p>
+          </div>
+        </div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is there a dress code?<span
+              class="plus">+</span></button>
+          <div class="faq-a">
+            <p>Smart casual is perfect. We simply ask that you come ready for an occasion, not a rush.</p>
+          </div>
+        </div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What are your hours?<span
+              class="plus">+</span></button>
+          <div class="faq-a">
+            <p>We're open daily from 12:00 to 23:00, including public holidays. The kitchen closes for last orders at
+              22:30.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="reserve">
+        <div class="kicker">10 · Your table awaits</div>
+        <h2>Make an evening<br><em>of it.</em></h2>
+        <p class="muted">Tell us when you’re coming. We’ll take care of the rest — from your favourite corner to the
+          last detail on the table.</p><button class="gold" onclick="openModal()">Begin a reservation ↗</button>
+      </div>
+    </section>
+
+    <section class="section dark contact" id="visit">
+      <div class="kicker">11 · Find us</div>
+      <div class="two">
+        <div>
+          <h2>At the heart<br><em>of Sahibganj.</em></h2>
+          <p class="muted">Main Road, near the old clock tower<br>Sahibganj, Jharkhand 816109</p>
+        </div>
+        <div>
+          <p class="muted">OPEN DAILY</p><strong>12:00 — 23:00</strong>
+          <p class="muted">CONCIERGE</p><strong>+91 87577 66766</strong>
+        </div>
+      </div>
+      <!-- 🗺️ LIVE MAP — no API key needed. Change MAP_QUERY in the script below to update the address. -->
+      <div class="mapframe"><iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="logo"><span class="seal">RB</span><span><strong>ROYAL BITE</strong><small>HOUSE OF INDIAN
+          DINING</small></span></div>
+    <div class="footerbottom"><span>© 2024 Royal Bite · Made for the table</span><span>Sahibganj · Jharkhand</span>
+    </div>
+  </footer>
+  <div class="overlay hidden" id="overlay" onclick="closeModal()"></div>
+  <div class="modal hidden" id="modal"><button class="close" onclick="closeModal()">×</button>
+    <div class="kicker">Royal concierge</div>
+    <h2>Reserve your<br><em>royal table.</em></h2>
+    <p class="muted">We’ll confirm availability personally within 30 minutes — or message us directly on WhatsApp.</p>
+    <form onsubmit="submitBooking(event)"><label>Name<input required id="rbName"
+          placeholder="Your name"></label><label>Phone<input required id="rbPhone" type="tel"
+          placeholder="+91 00000 00000"></label><label>Date<input required id="rbDate"
+          type="date"></label><label>Guests<select id="rbGuests">
+          <option>2 guests</option>
+          <option>4 guests</option>
+          <option>6 guests</option>
+          <option>8+ guests</option>
+        </select></label><button class="gold" type="submit">Request my table ↗</button></form>
+  </div>
+
+  <!-- minimal WhatsApp concierge button -->
+  <a class="wa-fab" id="waFab" href="#"
+    onclick="event.preventDefault();waMessage('Hi Royal Bite, I would like to reserve a table.')"><b>RB</b>WHATSAPP</a>
+
+  <script>
+    /* ⚙️ SETTINGS — update these two before launch */
+    const WHATSAPP_NUMBER = "9187577766"; // digits only, country code first e.g. 91XXXXXXXXXX — currently a placeholder, confirm the real number
+    const MAP_QUERY = "Main Road, near the old clock tower, Sahibganj, Jharkhand 816109";
+
+    document.getElementById('mapFrame').src = "https://www.google.com/maps?q=" + encodeURIComponent(MAP_QUERY) + "&output=embed";
+
+    /* Every real photo (.frame img.photo / .dishimg img.photo) auto-hides the placeholder
+       mark once it loads successfully, and simply stays invisible (showing the placeholder)
+       if the file isn't there yet — so nothing ever looks "broken" before photos are added. */
+    function initPhotos() {
+      document.querySelectorAll('.frame img.photo, .dishimg img.photo').forEach(img => {
+        const box = img.closest('.frame, .dishimg');
+        img.addEventListener('load', () => box.classList.add('has-photo'));
+        img.addEventListener('error', () => { img.style.display = 'none'; box.classList.remove('has-photo'); });
+      });
+    }
+    document.addEventListener('DOMContentLoaded', initPhotos);
+
+    function waMessage(text) { window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text), "_blank"); }
+    function go(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }) }
+    function openModal() { document.getElementById('modal').classList.remove('hidden'); document.getElementById('overlay').classList.remove('hidden') }
+    function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('overlay').classList.add('hidden') }
+    function submitBooking(e) {
+      e.preventDefault();
+      const name = document.getElementById('rbName').value, phone = document.getElementById('rbPhone').value, date = document.getElementById('rbDate').value, guests = document.getElementById('rbGuests').value;
+      closeModal();
+      waMessage("Hi Royal Bite, I would like to reserve a table.\n\nName: " + name + "\nPhone: " + phone + "\nDate: " + date + "\nGuests: " + guests);
+    }
+    function note(name) { alert(name + ' added to your tasting note.') }
+    function filter(cat, button) { document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active')); button.classList.add('active'); document.querySelectorAll('.dish').forEach(d => d.style.display = cat === 'all' || d.dataset.cat === cat ? 'block' : 'none') }
+    function search(term) { document.querySelectorAll('.dish').forEach(d => d.style.display = d.innerText.toLowerCase().includes(term.toLowerCase()) ? 'block' : 'none') }
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('#faqList .faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight = null; });
+      if (!wasOpen) { item.classList.add('open'); const a = item.querySelector('.faq-a'); a.style.maxHeight = a.scrollHeight + 'px'; }
+    }
+  </script>
+</body>
+
+</html>
